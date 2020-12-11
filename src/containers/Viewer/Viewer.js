@@ -32,15 +32,6 @@ const Viewer = () => {
    },[]);
 
 
-
-
-
-
-
-
-
-
-
   return (
     <>Viewer</>
   );
