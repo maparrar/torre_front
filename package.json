@@ -2,6 +2,10 @@
   "name": "torre_front",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "npm": "7.0.15",
+    "node": "15.4.0"
+  },
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
@@ -16,7 +20,7 @@
     "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "start": "HTTPS=true  react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -47,5 +51,6 @@
     "scripts": {
       "pre-push": "surge --project ./ --domain skillsviewer.surge.sh"
     }
-  }
+  },
+  "proxy": "http://localhost:4000"
 }
