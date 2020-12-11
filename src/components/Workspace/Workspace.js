@@ -1,9 +1,7 @@
 import React from 'react';
 
-const Body = props => (
+const Workspace = props => (
   <>{props.children}</>
 );
 
-
-
-export default Body;
+export default Workspace;

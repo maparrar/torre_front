@@ -1,16 +1,16 @@
 import './App.css';
 
 import Header from "./components/Header/Header";
-import Body from "./components/Body/Body";
+import Workspace from "./components/Workspace/Workspace";
 import Viewer from "./containers/Viewer/Viewer";
 
-function App() {
+const App = () => {
   return (
     <>
       <Header />
-      <Body>
+      <Workspace>
         <Viewer />
-      </Body>
+      </Workspace>
     </>
   );
 }
