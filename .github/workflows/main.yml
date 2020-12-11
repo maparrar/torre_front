@@ -23,7 +23,8 @@ jobs:
     name: Deploy to Surge
     
     steps:
-      - run: npm run build
+      - run: npm install
+      - run: npm run build --if-present
       - name: Deploy to skillsviewer.surge.sh
         uses: dswistowski/surge-sh-action@v1
         with:
