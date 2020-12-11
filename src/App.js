@@ -1,10 +1,17 @@
 import './App.css';
 
-function App() {
+import Header from "./components/Header/Header";
+import Workspace from "./components/Workspace/Workspace";
+import Viewer from "./containers/Viewer/Viewer";
+
+const App = () => {
   return (
-    <div className="App">
-      <h1>skillsviewer</h1>
-    </div>
+    <>
+      <Header />
+      <Workspace>
+        <Viewer />
+      </Workspace>
+    </>
   );
 }
 
