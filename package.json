@@ -46,11 +46,5 @@
   "devDependencies": {
     "git-scripts": "^0.4.3",
     "surge": "^0.21.7"
-  },
-  "git": {
-    "scripts": {
-      "pre-push": "surge --project ./ --domain skillsviewer.surge.sh"
-    }
-  },
-  "proxy": "http://localhost:4000"
+  }
 }
