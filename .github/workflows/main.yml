@@ -2,7 +2,7 @@
 
 name: CI
 
-# Controls when the action will run. 
+# Controls when the action will run.
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
@@ -21,12 +21,11 @@ jobs:
     runs-on: ubuntu-latest
 
     name: Deploy to Surge
-    
+
     strategy:
       matrix:
         node-version: [15.x]
 
-    
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
@@ -36,7 +35,7 @@ jobs:
       - run: npm install
       - run: npm run build --if-present
       #- run: npm test
-                   
+
       - name: Deploy to skillsviewer.surge.sh
         uses: dswistowski/surge-sh-action@v1
         with:
