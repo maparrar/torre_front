@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/skillsviewer/static/css/main.8c8b27cf.chunk.css",
+    "main.js": "/skillsviewer/static/js/main.3423cd1d.chunk.js",
+    "main.js.map": "/skillsviewer/static/js/main.3423cd1d.chunk.js.map",
+    "runtime-main.js": "/skillsviewer/static/js/runtime-main.0336c741.js",
+    "runtime-main.js.map": "/skillsviewer/static/js/runtime-main.0336c741.js.map",
+    "static/js/2.a6f0dcd6.chunk.js": "/skillsviewer/static/js/2.a6f0dcd6.chunk.js",
+    "static/js/2.a6f0dcd6.chunk.js.map": "/skillsviewer/static/js/2.a6f0dcd6.chunk.js.map",
+    "static/js/3.454f833d.chunk.js": "/skillsviewer/static/js/3.454f833d.chunk.js",
+    "static/js/3.454f833d.chunk.js.map": "/skillsviewer/static/js/3.454f833d.chunk.js.map",
+    "index.html": "/skillsviewer/index.html",
+    "static/css/main.8c8b27cf.chunk.css.map": "/skillsviewer/static/css/main.8c8b27cf.chunk.css.map",
+    "static/js/2.a6f0dcd6.chunk.js.LICENSE.txt": "/skillsviewer/static/js/2.a6f0dcd6.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.0336c741.js",
+    "static/js/2.a6f0dcd6.chunk.js",
+    "static/css/main.8c8b27cf.chunk.css",
+    "static/js/main.3423cd1d.chunk.js"
+  ]
+}
