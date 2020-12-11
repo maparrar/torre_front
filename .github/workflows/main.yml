@@ -25,6 +25,7 @@ jobs:
     steps:
       - name: Install packages
         uses: actions/setup-node@v1
+      - run: cd ..
       - run: npm install
       - run: npm run build --if-present
         
