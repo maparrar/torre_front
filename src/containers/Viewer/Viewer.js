@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 
 import axios from 'axios';
+import UserBox from "../../components/UserBox/UserBox";
 
 const Viewer = () => {
 
@@ -33,7 +34,10 @@ const Viewer = () => {
 
 
   return (
-    <>Viewer</>
+    <>
+      <UserBox />
+      Viewer
+    </>
   );
 };
 
