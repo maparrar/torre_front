@@ -13,7 +13,7 @@ const UserBox = props => {
   }, [props.username]);
 
   const changeUsernameHandler = e => setUsername(e.target.value);
-  const goButtonHandler = () => username.length && props.doSetUser(username);
+  const goButtonHandler = () => username.length && props.doSetUsername(username);
 
   return <div>
     <input placeholder='Write the username' value={username} onChange={changeUsernameHandler}/>
@@ -26,7 +26,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  doSetUser: username => dispatch({type: actionTypes.SET_USERNAME, username: username}),
+  doSetUsername: username => dispatch({type: actionTypes.SET_USERNAME, username: username}),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps) (UserBox);
