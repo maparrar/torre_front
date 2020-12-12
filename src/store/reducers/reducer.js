@@ -1,7 +1,8 @@
 import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
-  token: null
+  token: null,
+  username: ''
 };
 
 const reducer = (state = initialState, action) => {
@@ -10,6 +11,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         token: action.token
+      }
+    case actionTypes.SET_USERNAME:
+      return {
+        ...state,
+        username: action.username
       }
     default:
       return {
