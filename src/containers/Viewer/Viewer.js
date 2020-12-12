@@ -11,7 +11,7 @@ import User from "../../components/User/User";
 import Opportunity from "../../components/Opportunity/Opportunity";
 
 import classes from './Viewer.module.css';
-import {generateUserNode} from "../../Util/data";
+import {generateGraphData} from "../../Util/data";
 import Graph from "./Graph/Graph";
 
 const Viewer = props => {
@@ -35,8 +35,8 @@ const Viewer = props => {
 
   useEffect(() => {
     if(props.user && props.user.name){
-      const data = {currency: "USD", page: 0, periodicity:"hourly", lang: props.locale,aggregate: false}
-      axios.post( 'https://search.torre.co/opportunities/_search?size=20&offset=0&lang=es', data).then((response) => {
+      const data = {currency: "USD", page: 0, periodicity:"monthly", lang: props.locale,aggregate: false}
+      axios.post( 'https://search.torre.co/opportunities/_search?size=20&offset=0&lang=es&periodicity=monthly', data).then((response) => {
         const opportunities = response.data.results;
         props.doSetOpportunities(opportunities);
       });
@@ -45,19 +45,24 @@ const Viewer = props => {
 
   useEffect(() => {
     if(props.opportunities.length){
+      const data = generateGraphData(props.user, props.opportunities);
 
+
+      console.log("USER");
       console.log(props.user);
+      console.log("OPPORTUNITIES");
       console.log(props.opportunities);
-      //generateUserNode(props.strengths);
+      console.log("DATA");
+      console.log(data);
 
-      drawChart();
+      drawChart(data);
     }
   }, [props.opportunities]);
 
-  const drawChart = () => {
+  const drawChart = (data) => {
     const margin = {top: 10, right: 30, bottom: 30, left: 40},
       width = 400 - margin.left - margin.right,
-      height = 400 - margin.top - margin.bottom;
+      height = 800 - margin.top - margin.bottom;
 
     // append the svg object to the body of the page
     const svg = d3.select("#viz")
@@ -69,32 +74,32 @@ const Viewer = props => {
 
     //d3.json("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/data_network.json", function( data) {
 
-    const data = {
-      "nodes": [
-        {"id": 1, "name": "A"},
-        {"id": 2, "name": "B"},
-        {"id": 3, "name": "C"},
-        {"id": 4, "name": "D"},
-        {"id": 5, "name": "E"},
-        {"id": 6, "name": "F"},
-        {"id": 7, "name": "G"},
-        {"id": 8, "name": "H"},
-        {"id": 9, "name": "I"},
-        {"id": 10, "name": "J"}
-      ],
-      "links": [
-        {"source": 1, "target": 2},
-        {"source": 1, "target": 5},
-        {"source": 1, "target": 6},
-        {"source": 2, "target": 3},
-        {"source": 2, "target": 7},
-        {"source": 3, "target": 4},
-        {"source": 8, "target": 3},
-        {"source": 4, "target": 5},
-        {"source": 4, "target": 9},
-        {"source": 5, "target": 10}
-      ]
-    };
+    // const data = {
+    //   "nodes": [
+    //     {"id": 1, "name": "A"},
+    //     {"id": 2, "name": "B"},
+    //     {"id": 3, "name": "C"},
+    //     {"id": 4, "name": "D"},
+    //     {"id": 5, "name": "E"},
+    //     {"id": 6, "name": "F"},
+    //     {"id": 7, "name": "G"},
+    //     {"id": 8, "name": "H"},
+    //     {"id": 9, "name": "I"},
+    //     {"id": 10, "name": "J"}
+    //   ],
+    //   "links": [
+    //     {"source": 1, "target": 2},
+    //     {"source": 1, "target": 5},
+    //     {"source": 1, "target": 6},
+    //     {"source": 2, "target": 3},
+    //     {"source": 2, "target": 7},
+    //     {"source": 3, "target": 4},
+    //     {"source": 8, "target": 3},
+    //     {"source": 4, "target": 5},
+    //     {"source": 4, "target": 9},
+    //     {"source": 5, "target": 10}
+    //   ]
+    // };
 
     // Initialize the links
       const link = svg
@@ -117,8 +122,15 @@ const Viewer = props => {
         .attr("r", 20)
         .style("fill", "#69b3a2")
 
+    node.append("title")
+      .text(function(d) { return d.name; });
 
-      ;
+    node.append("text")
+      .text(function(d) {
+        return d.name;
+      })
+      .attr('x', 6)
+      .attr('y', 3);
 
       // Let's list the force we wanna apply on the network
       const simulation = d3.forceSimulation(data.nodes)                 // Force algorithm is applied to data.nodes
