@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 
 import * as actionTypes from '../../store/actions/actionTypes';
 
+import classes from './UserBox.module.css';
+
 const UserBox = props => {
   const [username, setUsername] = useState('');
 
@@ -13,11 +15,19 @@ const UserBox = props => {
   }, [props.username]);
 
   const changeUsernameHandler = e => setUsername(e.target.value);
-  const goButtonHandler = () => username.length && props.doSetUsername(username);
+  const keyDownHandler = e => {
+    if (e.key === 'Enter' && username.length) {
+      props.doSetUsername(username)
+    }
+  }
 
-  return <div>
-    <input placeholder='Write the username' value={username} onChange={changeUsernameHandler}/>
-    <button onClick={goButtonHandler}>Go</button>
+  return <div className={classes.wrapper}>
+    <input
+      placeholder='Look by usernames'
+      value={username}
+      onChange={changeUsernameHandler}
+      onKeyDown={keyDownHandler}
+    />
   </div>
 };
 
