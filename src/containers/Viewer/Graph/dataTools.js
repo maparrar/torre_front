@@ -41,8 +41,8 @@ function getAverageUSDMonthlyAmount(data) {
 }
 
 function getDistance(amount, skillsCount) {
-  const multiplier = 100;
-  return Math.round(skillsCount * multiplier);
+  const multiplier = 120;
+  return Math.round((1 / skillsCount) * multiplier);
 }
 
 export const generateGraphData = (user, opportunities) => {
@@ -76,7 +76,7 @@ export const generateGraphData = (user, opportunities) => {
         organization: opportunity.organizations[0],
         image: opportunity.organizations[0] && opportunity.organizations[0].picture,
         skills: opportunity.skills,
-        radius: amount / 800,
+        radius: amount / 600,
         color: '#000000',
         stroke: '#fff'
       });

@@ -6,9 +6,11 @@ import Graph from "./Graph/Graph";
 import Modal from "../../components/UI/Modal/Modal";
 import * as actionTypes from "../../store/actions/actionTypes";
 import {generateGraphData} from "./Graph/dataTools";
+import Comparator from "./../../components/Comparator/Comparator"
 
 const Viewer = props => {
   const [data, setData] = useState(null);
+  const [selectedOpportunity, setSelectedOpportunity] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
@@ -43,17 +45,15 @@ const Viewer = props => {
   useEffect(() => {
     if(props.opportunities.length){
       const data = generateGraphData(props.user, props.opportunities);
-
-      console.log("DATA");
-      console.log(data);
-
       setData(data);
     }
   }, [props.opportunities]);
 
-  const nodeClickHandler = e => {
-    console.log('Click...', e);
-    setModalVisible(true);
+  const nodeClickHandler = (e, d) => {
+    if(d.id !== 'user'){
+      setSelectedOpportunity(d);
+      setModalVisible(true);
+    }
   };
 
   const modalCloseHandler = () => {
@@ -67,7 +67,14 @@ const Viewer = props => {
         onClose={modalCloseHandler}
         onOk={modalCloseHandler}
         onBackDrop={modalCloseHandler}
-      />
+        title='Compare skills'
+      >
+        <Comparator
+          opportunity={selectedOpportunity}
+          user={props.user}
+          username={props.username}
+        />
+      </Modal>
       <Graph
         data={data}
         onCLick={nodeClickHandler}
