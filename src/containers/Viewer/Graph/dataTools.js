@@ -56,7 +56,9 @@ export const generateGraphData = (user, opportunities) => {
     name: user.name,
     image: user.pictureThumbnail,
     professionalHeadline: user.professionalHeadline,
-    radius: 15
+    radius: 15,
+    color: '#cddc39',
+    stroke: '#cddc39'
   });
 
   for(let i = 0; i < opportunities.length; i++){
@@ -74,7 +76,9 @@ export const generateGraphData = (user, opportunities) => {
         organization: opportunity.organizations[0],
         image: opportunity.organizations[0] && opportunity.organizations[0].picture,
         skills: opportunity.skills,
-        radius: amount / 800
+        radius: amount / 800,
+        color: '#000000',
+        stroke: '#fff'
       });
       for (let j = 0; j < opportunity.skills.length; j++) {
         const skill = opportunity.skills[j];

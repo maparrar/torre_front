@@ -82,7 +82,7 @@ const Graph = props => {
     ;
 
     const link = svg.append("g")
-      .attr("stroke", "#999")
+      .attr("stroke", "#cddc39")
       .attr("stroke-opacity", 0.6)
       .selectAll("line")
       .data(data.links)
@@ -91,15 +91,15 @@ const Graph = props => {
     ;
 
     const node = svg.append("g")
-      .attr("stroke", "#fff")
+      // .attr("stroke", d => d.stroke)
       .attr("stroke-width", 1.5)
       .selectAll("circle")
       .data(data.nodes)
       .join("circle")
       .attr("r", d => d.radius)
-      .attr("fill", color)
+      .attr("stroke", d => d.stroke)
+      .attr("fill", d => d.color)
       .call(drag(simulation))
-      // .append("g")
     ;
 
     node.append("title")
