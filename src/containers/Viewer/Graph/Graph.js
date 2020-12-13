@@ -21,13 +21,7 @@ const Graph = props => {
   }, []);
 
   const drawChart = (data) => {
-
     d3.select("svg").remove();
-
-    const color = () => {
-      const scale = d3.scaleOrdinal(d3.schemeCategory10);
-      return d => scale(d.group);
-    };
 
     const drag = simulation => {
 
@@ -53,8 +47,6 @@ const Graph = props => {
         .on("drag", dragged)
         .on("end", dragended);
     };
-
-
 
     const margin = {top: 10, right: 30, bottom: 30, left: 40},
       width = viewerWidth - margin.left - margin.right,
@@ -82,7 +74,7 @@ const Graph = props => {
     ;
 
     const link = svg.append("g")
-      .attr("stroke", "#999")
+      .attr("stroke", "#cddc39")
       .attr("stroke-opacity", 0.6)
       .selectAll("line")
       .data(data.links)
@@ -91,22 +83,26 @@ const Graph = props => {
     ;
 
     const node = svg.append("g")
-      .attr("stroke", "#fff")
       .attr("stroke-width", 1.5)
       .selectAll("circle")
       .data(data.nodes)
       .join("circle")
       .attr("r", d => d.radius)
-      .attr("fill", color)
+      .attr("stroke", d => d.stroke)
+      .attr("fill", d => d.color)
       .call(drag(simulation))
-      // .append("g")
+      .style("cursor", "pointer")
+      .on('click', props.onCLick)
     ;
 
     node.append("title")
       .text(d => {
         let text = d.name;
         if(d.compensation){
-          text += ' - USD $' + d.compensation.amount;
+          text += `\n${d.organization.name}`;
+          text += `\n~${d.compensation.amount.toLocaleString()} USD / mo`;
+        }else{
+          text += `\n${d.professionalHeadline}`;
         }
         return text
       }
