@@ -1,0 +1,58 @@
+.Modal {
+    background: white;
+    border-radius: 8px;
+    left: 50%;
+    min-height: 50px;
+    min-width: 30%;
+    opacity: 1;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1001;
+}
+
+.head {
+    height: 45px;
+    border-bottom: 1px solid #eeeeee;
+}
+.head .title{
+    color: #666666;
+    float: left;
+    height: 45px;
+    line-height: 45px;
+    padding-left: 15px;
+}
+.head .closeButton{
+    border-radius: 0 8px 0 0;
+    color: #666666;
+    cursor: pointer;
+    float: right;
+    height: 45px;
+    line-height: 45px;
+    text-align: center;
+    width: 45px;
+}
+.head .closeButton:hover {
+    background: #cccccc;
+}
+
+.body {
+    display: inline-block;
+    height: 150px;
+    overflow: auto;
+    width: 100%;
+}
+
+.content {
+    display: flex;
+    padding: 5px 15px;
+}
+
+.buttons {
+    border-top: 1px solid #eeeeee;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    padding: 10px;
+}

@@ -3,11 +3,13 @@ import {connect} from "react-redux";
 import axios from 'axios';
 
 import Graph from "./Graph/Graph";
+import Modal from "../../components/UI/Modal/Modal";
 import * as actionTypes from "../../store/actions/actionTypes";
 import {generateGraphData} from "./Graph/dataTools";
 
 const Viewer = props => {
   const [data, setData] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     if(props.username && props.username.length){
@@ -49,10 +51,26 @@ const Viewer = props => {
     }
   }, [props.opportunities]);
 
+  const nodeClickHandler = e => {
+    console.log('Click...', e);
+    setModalVisible(true);
+  };
+
+  const modalCloseHandler = () => {
+    setModalVisible(false);
+  }
+
   return (
     <>
+      <Modal
+        isVisible={modalVisible}
+        onClose={modalCloseHandler}
+        onOk={modalCloseHandler}
+        onBackDrop={modalCloseHandler}
+      />
       <Graph
         data={data}
+        onCLick={nodeClickHandler}
       />
     </>
   );

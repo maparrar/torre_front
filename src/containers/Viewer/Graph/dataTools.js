@@ -56,7 +56,7 @@ export const generateGraphData = (user, opportunities) => {
     name: user.name,
     image: user.pictureThumbnail,
     professionalHeadline: user.professionalHeadline,
-    radius: 15,
+    radius: 25,
     color: '#cddc39',
     stroke: '#cddc39'
   });

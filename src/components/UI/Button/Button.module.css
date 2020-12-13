@@ -1,0 +1,20 @@
+.Button {
+    background: white;
+    border: 1px solid #aaaaaa;
+    border-radius: 4px;
+    color: #888888;
+    cursor: pointer;
+    height: 35px;
+    margin: 0 5px;
+    outline:none;
+    padding: 0 8px;
+}
+
+.Button:hover {
+    background: #eeeeee;
+}
+
+.Button p {
+    margin: 0;
+    padding: 0;
+}
