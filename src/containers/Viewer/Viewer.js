@@ -36,7 +36,7 @@ const Viewer = props => {
 
   useEffect(() => {
     if(props.user && props.user.name){
-      const jobsByPage = 150;
+      const jobsByPage = 250;
       const url = `https://search.torre.co/opportunities/_search?size=${jobsByPage}&offset=0&lang=es`;
       const data = {currency: "USD", page: 0, periodicity:"monthly", lang: props.locale,aggregate: false}
       axios.post(url, data).then((response) => {
