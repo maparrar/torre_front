@@ -7,14 +7,18 @@ import Modal from "../../components/UI/Modal/Modal";
 import * as actionTypes from "../../store/actions/actionTypes";
 import {generateGraphData} from "./Graph/dataTools";
 import Comparator from "./../../components/Comparator/Comparator"
+import Info from "../../components/UI/Info/Info";
+import Loading from "../../components/UI/Loading/Loading";
 
 const Viewer = props => {
   const [data, setData] = useState(null);
   const [selectedOpportunity, setSelectedOpportunity] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
+  const [loadingVisible, setLoadingVisible] = useState(false);
 
   useEffect(() => {
     if(props.username && props.username.length){
+      setLoadingVisible(true);
       const proxy = "https://corsshield.herokuapp.com/";
       const url = "https://torre.bio/api/bios/" + props.username;
       axios.get( proxy + url).then((response) => {
@@ -49,6 +53,10 @@ const Viewer = props => {
     }
   }, [props.opportunities]);
 
+  useEffect(() => {
+    setLoadingVisible(false);
+  }, [data]);
+
   const nodeClickHandler = (e, d) => {
     if(d.id !== 'user'){
       setSelectedOpportunity(d);
@@ -75,6 +83,8 @@ const Viewer = props => {
           username={props.username}
         />
       </Modal>
+      <Info />
+      <Loading isVisible={loadingVisible}/>
       <Graph
         data={data}
         onCLick={nodeClickHandler}

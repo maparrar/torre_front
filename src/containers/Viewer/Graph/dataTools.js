@@ -1,4 +1,4 @@
-function slugify (str) {
+export const slugify = str => {
   const map = {
     '_' : ' ',
     'a' : 'á|à|ã|â|À|Á|Ã|Â',
@@ -41,7 +41,7 @@ function getAverageUSDMonthlyAmount(data) {
 }
 
 function getDistance(amount, skillsCount) {
-  const multiplier = 120;
+  const multiplier = 190;
   return Math.round((1 / skillsCount) * multiplier);
 }
 
@@ -102,4 +102,4 @@ export const generateGraphData = (user, opportunities) => {
   return data;
 };
 
-export default {generateGraphData};
+export default {slugify, generateGraphData};

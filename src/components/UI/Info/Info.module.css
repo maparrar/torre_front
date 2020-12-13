@@ -1,0 +1,38 @@
+.info {
+  left: 20px;
+  position: absolute;
+  top: 20px;
+}
+
+.icon {
+  background-color: rgba(255, 255, 255, 0.2);
+  border: solid 1px #888888;
+  border-radius: 50%;
+  color: #888888;
+  cursor: pointer;
+  font-family: "Noto Serif Georgian";
+  font-size: 26px;
+  font-weight: bold;
+  height: 30px;
+  line-height: 27px;
+  text-align: center;
+  width: 30px;
+}
+
+.content {
+  background-color: rgba(255, 255, 255, 0.2);
+  border: solid 1px #888888;
+  border-radius: 8px;
+  color: #aaaaaa;
+  height: 200px;
+  margin-top: 5px;
+  overflow: auto;
+  padding: 5px;
+  width: 300px;
+  z-index: 1002;
+}
+
+.content p {
+  margin: 20px 0;
+  padding: 0;
+}
