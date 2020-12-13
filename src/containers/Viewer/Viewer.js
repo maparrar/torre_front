@@ -1,44 +1,82 @@
-import React, {useEffect} from 'react';
-
+import React, {useEffect, useState} from 'react';
+import {connect} from "react-redux";
 import axios from 'axios';
-import UserBox from "../../components/UserBox/UserBox";
 
-const Viewer = () => {
+import Graph from "./Graph/Graph";
+import * as actionTypes from "../../store/actions/actionTypes";
+import {generateGraphData} from "./Graph/dataTools";
+
+const Viewer = props => {
+  const [data, setData] = useState(null);
 
   useEffect(() => {
-    const proxy = "https://corsshield.herokuapp.com/";
-    const url = "https://torre.bio/api/bios/maparrar";
-    axios.get( proxy + url).then((response) => {
-      // opportunities = response.data;
-      console.log(response.data);
-    });
-  },[]);
+    if(props.username && props.username.length){
+      const proxy = "https://corsshield.herokuapp.com/";
+      const url = "https://torre.bio/api/bios/" + props.username;
+      axios.get( proxy + url).then((response) => {
+        const person = response.data.person;
+        props.doSetUser(
+          person.locale,
+          person.name,
+          person.pictureThumbnail,
+          person.professionalHeadline,
+          response.data.strengths
+        );
+      });
+    }
+  },[props.username]);
 
-   useEffect(() => {
+  useEffect(() => {
+    if(props.user && props.user.name){
+      const jobsByPage = 150;
+      const url = `https://search.torre.co/opportunities/_search?size=${jobsByPage}&offset=0&lang=es`;
+      const data = {currency: "USD", page: 0, periodicity:"monthly", lang: props.locale,aggregate: false}
+      axios.post(url, data).then((response) => {
+        const opportunities = response.data.results;
+        props.doSetOpportunities(opportunities);
+      });
+    }
+  },[props.user]);
 
-     const data = {
-       currency: "USD",
-       page:0,
-       periodicity:"hourly",
-       lang: "es",
-       size: 20,
-       aggregate: false,
-       offset: 0
-     }
-     axios.post( 'https://search.torre.co/opportunities/_search', data).then((response) => {
-       const opportunities = response.data;
-       console.log(opportunities);
+  useEffect(() => {
+    if(props.opportunities.length){
+      const data = generateGraphData(props.user, props.opportunities);
 
-     });
-   },[]);
+      console.log("DATA");
+      console.log(data);
 
+      setData(data);
+    }
+  }, [props.opportunities]);
 
   return (
     <>
-      <UserBox />
-      Viewer
+      <Graph
+        data={data}
+      />
     </>
   );
 };
 
-export default Viewer;
+const mapStateToProps = state => ({
+  username: state.username,
+  user: state.user,
+  opportunities: state.opportunities
+});
+
+const mapDispatchToProps = dispatch => {
+  return {
+    doSetUsername: username => dispatch({type: actionTypes.SET_USERNAME, username: username}),
+    doSetUser: (locale, name, pictureThumbnail, professionalHeadline, strengths) => dispatch({
+      type: actionTypes.SET_USER,
+      locale: locale,
+      name: name,
+      pictureThumbnail: pictureThumbnail,
+      professionalHeadline: professionalHeadline,
+      strengths: strengths
+    }),
+    doSetOpportunities: opportunities => dispatch({type: actionTypes.SET_OPPORTUNITIES, opportunities: opportunities})
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps) (Viewer);
