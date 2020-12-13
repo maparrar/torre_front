@@ -1,0 +1,19 @@
+.wrapper {
+  /*margin: 0 15px;*/
+}
+
+.wrapper input {
+  background: #27292d;
+  border: 1px solid #686868;
+  border-radius: 20px;
+  color: #cddc39;
+  height: 38px;
+  padding-left: 25px;
+  width: 100%;
+}
+
+.wrapper input:focus, .wrapper input:hover {
+  color: #cddc39;
+  border: 1px solid #ffffff;
+  outline: none;
+}

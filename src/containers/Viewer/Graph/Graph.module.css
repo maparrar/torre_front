@@ -1,0 +1,13 @@
+.wrapper {
+  height: 100%;
+  width: 100%;
+}
+
+.viewer {
+  background-color: #010101;
+  border-radius: 4px;
+  height: 100%;
+  width: 100%;
+}
+
+
