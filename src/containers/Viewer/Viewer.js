@@ -7,6 +7,7 @@ import Modal from "../../components/UI/Modal/Modal";
 import * as actionTypes from "../../store/actions/actionTypes";
 import {generateGraphData} from "./Graph/dataTools";
 import Comparator from "./../../components/Comparator/Comparator"
+import Info from "../../components/UI/Info/Info";
 
 const Viewer = props => {
   const [data, setData] = useState(null);
@@ -75,6 +76,7 @@ const Viewer = props => {
           username={props.username}
         />
       </Modal>
+      <Info />
       <Graph
         data={data}
         onCLick={nodeClickHandler}
