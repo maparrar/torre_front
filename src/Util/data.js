@@ -11,9 +11,40 @@ function slugify (str) {
   };
   for (const pattern in map) {
     str = str.replace(new RegExp(map[pattern], 'g'), pattern);
-  };
+  }
   return str.toLowerCase();
-};
+}
+
+function getAverageUSDMonthlyAmount(data) {
+  // This value can be get using an API like this https://free.currconv.com/api/v7/convert?q=USD_COP&compact=ultra&apiKey=api_key
+  // for this example is avoided for performance reasons
+  const cop = 3438;
+  let periodicityMultiplier;
+  let averageSalary = (
+    data.minAmount +
+    (data.maxAmount ? data.maxAmount : data.minAmount)
+  ) / 2;
+  if(data.currency === "COP$"){
+    averageSalary = averageSalary / cop;
+  }
+  switch (data.periodicity) {
+    case "yearly":
+      periodicityMultiplier = 1 / 12;
+      break;
+    case "hourly":
+      periodicityMultiplier = 8 * 30;
+      break;
+    default:
+      periodicityMultiplier = 1;
+  }
+  return Math.round(averageSalary * periodicityMultiplier);
+}
+
+function getDistance(amount, skillsCount) {
+  const amountMultiplier = 500000;
+  const amountDistance = (1 / amount) * amountMultiplier;
+  return Math.round(skillsCount * amountDistance);
+}
 
 export const generateGraphData = (user, opportunities) => {
   const data = {
@@ -30,25 +61,36 @@ export const generateGraphData = (user, opportunities) => {
 
   for(let i = 0; i < opportunities.length; i++){
     const opportunity = opportunities[i];
-    let linkValue = 0;
-    data.nodes.push({
-      id: opportunity.id,
-      compensation: opportunity.compensation.data,
-      name: opportunity.objective,
-      organization: opportunity.organizations[0],
-      skills: opportunity.skills
-    });
-    for(let j = 0; j < opportunity.skills.length; j++){
-      const skill = opportunity.skills[j];
-      for(let k = 0; k < user.strengths.length; k++){
-        const strength = user.strengths[k];
-        if(slugify(skill.name) === slugify(strength.name)){
-          linkValue++;
+    let skillsCounter = 0;
+    if(opportunity.compensation && opportunity.compensation.visible && opportunity.compensation.data.minAmount) {
+      const amount = getAverageUSDMonthlyAmount(opportunity.compensation.data);
+      data.nodes.push({
+        id: opportunity.id,
+        compensation: {
+          ...opportunity.compensation.data,
+          amount: amount
+        },
+        name: opportunity.objective,
+        organization: opportunity.organizations[0],
+        skills: opportunity.skills
+      });
+      for (let j = 0; j < opportunity.skills.length; j++) {
+        const skill = opportunity.skills[j];
+        for (let k = 0; k < user.strengths.length; k++) {
+          const strength = user.strengths[k];
+          if (slugify(skill.name) === slugify(strength.name)) {
+            skillsCounter++;
+          }
         }
       }
-    }
-    if(linkValue){
-      data.links.push({"source": "user", "target": opportunity.id, "value": linkValue});
+      if (skillsCounter) {
+        data.links.push({
+          "source": "user",
+          "target": opportunity.id,
+          "value": skillsCounter,
+          "distance": getDistance(amount, skillsCounter)
+        });
+      }
     }
   }
   return data;

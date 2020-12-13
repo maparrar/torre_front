@@ -23,7 +23,7 @@ const UserBox = props => {
 
   return <div className={classes.wrapper}>
     <input
-      placeholder='Look by usernames'
+      placeholder='Look by username'
       value={username}
       onChange={changeUsernameHandler}
       onKeyDown={keyDownHandler}
