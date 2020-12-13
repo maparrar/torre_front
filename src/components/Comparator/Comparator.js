@@ -2,6 +2,8 @@ import React from "react";
 
 import classes from './Comparator.module.css';
 
+import {slugify} from "../../containers/Viewer/Graph/dataTools";
+
 const Comparator = props => (
   <>
     {props.opportunity && <div>
@@ -61,7 +63,7 @@ const Comparator = props => (
               {props.user.strengths.map( strength => {
                 for(let i = 0; i < props.opportunity.skills.length; i++) {
                   const skill = props.opportunity.skills[i];
-                  if(skill.name ===  strength.name){
+                  if(slugify(skill.name) ===  slugify(strength.name)){
                     return <div className={classes.items} key={strength.name}>{strength.name}</div>
                   }
                 }
