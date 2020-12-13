@@ -96,9 +96,11 @@ const Graph = props => {
       .selectAll("circle")
       .data(data.nodes)
       .join("circle")
-      .attr("r", 5)
+      .attr("r", d => d.radius)
       .attr("fill", color)
-      .call(drag(simulation));
+      .call(drag(simulation))
+      // .append("g")
+    ;
 
     node.append("title")
       .text(d => {
@@ -109,6 +111,21 @@ const Graph = props => {
         return text
       }
     );
+
+    node.append("image")
+      .attr("xlink:href", "https://github.com/favicon.ico")
+      .attr("x", 16)
+      .attr("y", 16)
+      .attr("width", 100)
+      .attr("height", 120)
+    ;
+
+    node.append("text")
+      .attr("dx", 12)
+      .attr("dy", ".35em")
+      .attr("color", "#ffffff")
+      .text(d => d.name)
+    ;
 
     simulation.on("tick", () => {
       link

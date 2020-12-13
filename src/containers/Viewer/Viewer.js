@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import Graph from "./Graph/Graph";
 import * as actionTypes from "../../store/actions/actionTypes";
-import {generateGraphData} from "../../Util/data";
+import {generateGraphData} from "./Graph/dataTools";
 
 const Viewer = props => {
   const [data, setData] = useState(null);
@@ -28,7 +28,7 @@ const Viewer = props => {
 
   useEffect(() => {
     if(props.user && props.user.name){
-      const jobsByPage = 100;
+      const jobsByPage = 150;
       const url = `https://search.torre.co/opportunities/_search?size=${jobsByPage}&offset=0&lang=es`;
       const data = {currency: "USD", page: 0, periodicity:"monthly", lang: props.locale,aggregate: false}
       axios.post(url, data).then((response) => {
@@ -42,11 +42,6 @@ const Viewer = props => {
     if(props.opportunities.length){
       const data = generateGraphData(props.user, props.opportunities);
 
-
-      console.log("USER");
-      console.log(props.user);
-      console.log("OPPORTUNITIES");
-      console.log(props.opportunities);
       console.log("DATA");
       console.log(data);
 
